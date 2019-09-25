@@ -8,9 +8,11 @@ RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get install -y apache2 php5.6 php5.6-common build-essential php5.6-mysql php5.6-curl php5.6-xml php5.6-zip php5.6-gd php5.6-mbstring php5.6-mcrypt
 
+RUN rm /var/www/html/index.html
 COPY ./html/login.php /var/www/html/index.php
 #COPY ./html/login.php /var/www/html/index.php
-COPY ./html/images  /var/www/html/
+#COPY ./html/images  /var/www/html/
+ADD ./html/images /var/www/html/glink_login
 
 EXPOSE 80
 WORKDIR /var/www/html
