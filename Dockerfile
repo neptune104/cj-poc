@@ -12,7 +12,9 @@ RUN rm /var/www/html/index.html
 COPY ./html/login.php /var/www/html/index.php
 #COPY ./html/login.php /var/www/html/index.php
 #COPY ./html/images  /var/www/html/
-ADD ./html/images /var/www/html/glink_login
+RUN mkdir -p /var/www/html/glink_login
+COPY ./html/images/ /var/www/html/glink_login/
+#ADD ./html/images /var/www/html/glink_login
 
 EXPOSE 80
 WORKDIR /var/www/html
