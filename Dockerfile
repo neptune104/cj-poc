@@ -1,25 +1,17 @@
-FROM php:5.6-apache
+FROM ubuntu:trusty
+MAINTAINER neptune104 <neptune104@nate.com>
 
 RUN apt-get update
-RUN apt-get install -y git zip
+RUN apt-get install -y apache2 php5.6 php5.6-common php5.6-json php5.6-opcache php5.6-zip php5.6-mysql php5.6-phpd
+bg php5.6-gd php5.6-imap php5.6-ldap php5.6-pgsql php5.6-pspell php5.6-recode php5.6-tidy php5.6-dev php5.6-intl php5.
+6-curl php5.6-mcrypt php5.6-xmlrpc php5.6-xsl php5.6-bz2 php5.6-mbstring pkg-config libmagickwand-dev imagemagick buil
+d-essential libapache2-mod-php5 vim
 
-RUN apt-get install -y libpng12-dev libjpeg-dev
-RUN apt-get install -y mysql-client
-RUN docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-&& docker-php-ext-install gd
+COPY ./html/login.php /var/www/html/index.php
+#COPY ./html/login.php /var/www/html/index.php
+COPY ./html/images  /var/www/html/
 
-RUN docker-php-ext-install mbstring
-RUN docker-php-ext-install mysqli
-RUN docker-php-ext-install pdo
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install opcache
+EXPOSE 80
+WORKDIR /var/www/html
 
-RUN apt-get install -y libssl-dev openssl
-RUN docker-php-ext-install phar
-
-RUN apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN a2enmod rewrite
-RUN a2enmod headers
-RUN apache2ctl -k graceful
+ENTRYPOINT ["/usr/sbin/apache2ctl","-D","FOREGROUND"]
